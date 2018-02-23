@@ -96,7 +96,7 @@ namespace Graphs.Classes
             return Nodes;
         }
 
-        public IEnumerable<IEdge> GetSortedEdges()
+        public IEnumerable<IEdge> GetEdgesSorted()
         {
             List<IEdge> edges = new List<IEdge>();
             foreach(ICollection<IEdge> edgeCollection in Edges.Values)
@@ -130,7 +130,6 @@ namespace Graphs.Classes
                 Edges.Add(node, edges);
             }
         }
-
         private void CheckEdgeNodes(INode firstNode, INode secondNode)
         {
             if(!HasNode(firstNode))

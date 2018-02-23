@@ -7,17 +7,15 @@ namespace Graphs.Classes
     {
         
         public Edge(INode firstNode, INode secondNode, double weight)
+            :this(firstNode, secondNode, false, weight)
+        {
+        }
+
+        public Edge(INode firstNode, INode secondNode, bool isDirected, double weight)
         {
             FirstNode = firstNode;
             SecondNode = secondNode;
             Weight = weight;
-
-            IsDirected = false;
-        }
-
-        public Edge(INode firstNode, INode secondNode, bool isDirected, double weight)
-            :this(firstNode, secondNode, weight)
-        {
             IsDirected = isDirected;
         }
 
@@ -28,7 +26,8 @@ namespace Graphs.Classes
 
         public bool CanGetOppositeNode(INode node)
         {
-            return (IsDirected && node == FirstNode) || !IsDirected;
+            return (node == FirstNode || node == SecondNode)
+                    && ((IsDirected && node == FirstNode) || !IsDirected);
         }
 
         public INode GetOppositeNode(INode node)

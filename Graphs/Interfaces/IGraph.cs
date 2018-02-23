@@ -6,7 +6,7 @@ namespace Graphs.Interfaces
     {
         bool IsDirected { get; }
         IEnumerable<INode> GetNodes();       
-        IEnumerable<IEdge> GetSortedEdges();
+        IEnumerable<IEdge> GetEdgesSorted();
         IEnumerable<IEdge> GetEdgesForNode(INode node);
 
         void AddNode(INode node);
