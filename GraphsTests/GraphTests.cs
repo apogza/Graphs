@@ -101,6 +101,7 @@ namespace GraphsTests
         }
 
         // TODO - Finish the test below
+        [Fact]
         public void TestGetOrderedEdges()
         {
             INode firstNode = new Node("1");
@@ -108,7 +109,7 @@ namespace GraphsTests
             INode thirdNode = new Node("3");
 
             IGraph directedGraph = new Graph(true);
-            
+            Assert.True(false);
         }
     }
 }
