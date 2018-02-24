@@ -1,6 +1,8 @@
+using System;
+
 namespace Graphs.Interfaces
 {
-    public interface IEdge : IGraphElement
+    public interface IEdge : IGraphElement, IComparable<IEdge>
     {
         INode FirstNode { get; }
         INode SecondNode { get; }

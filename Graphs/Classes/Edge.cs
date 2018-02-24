@@ -30,6 +30,11 @@ namespace Graphs.Classes
                     && ((IsDirected && node == FirstNode) || !IsDirected);
         }
 
+        public int CompareTo(IEdge edge)
+        {
+            return Weight.CompareTo(edge.Weight);
+        }
+
         public INode GetOppositeNode(INode node)
         {
             if(FirstNode == node)

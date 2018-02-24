@@ -108,8 +108,20 @@ namespace GraphsTests
             INode secondNode = new Node("2");
             INode thirdNode = new Node("3");
 
-            IGraph directedGraph = new Graph(true);
-            Assert.True(false);
+            IGraph directedGraph = new Graph();
+            directedGraph.AddNode(firstNode);
+            directedGraph.AddNode(secondNode);
+            directedGraph.AddNode(thirdNode);
+
+            directedGraph.BuildEdge(secondNode, thirdNode, 5);
+            directedGraph.BuildEdge(firstNode, secondNode, 2);
+            directedGraph.BuildEdge(firstNode, thirdNode, 1);
+
+            IEdge[] sortedEdges = directedGraph.GetEdgesSorted().ToArray();
+
+            Assert.Equal(1, sortedEdges[0].Weight);
+            Assert.Equal(2, sortedEdges[1].Weight);
+            Assert.Equal(5, sortedEdges[2].Weight);
         }
     }
 }

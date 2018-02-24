@@ -101,7 +101,13 @@ namespace Graphs.Classes
             List<IEdge> edges = new List<IEdge>();
             foreach(ICollection<IEdge> edgeCollection in Edges.Values)
             {
-                edges.AddRange(edgeCollection);
+                foreach(IEdge edge in edgeCollection)
+                {
+                    if(!edges.Contains(edge))
+                    {
+                        edges.Add(edge);
+                    }
+                }
             }
 
             edges.Sort();
