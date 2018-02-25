@@ -12,7 +12,7 @@ namespace Graphs.Algorithms
         public MinimumSpanningTree(IGraph graph)
             : base(graph)
         {
-            _edgesQueue = new Queue<IEdge>(Graph.GetEdgesSorted());
+            _edgesQueue = new Queue<IEdge>(Graph.GetSortedEdges());
 
             InitNodeClouds();
         }

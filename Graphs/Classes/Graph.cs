@@ -96,7 +96,7 @@ namespace Graphs.Classes
             return Nodes;
         }
 
-        public IEnumerable<IEdge> GetEdgesSorted()
+        public IEnumerable<IEdge> GetSortedEdges()
         {
             List<IEdge> edges = new List<IEdge>();
             foreach(ICollection<IEdge> edgeCollection in Edges.Values)

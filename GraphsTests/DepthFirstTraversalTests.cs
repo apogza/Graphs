@@ -35,7 +35,7 @@ namespace GraphsTests
 
             string result = string.Join(",", traversalResult.Nodes.Select(node => node.ID));
 
-            Assert.True(result == "1,2,4,5,3");
+            Assert.Equal("1,2,4,5,3", result);
         }
     }
 }

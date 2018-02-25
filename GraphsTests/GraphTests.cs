@@ -108,20 +108,77 @@ namespace GraphsTests
             INode secondNode = new Node("2");
             INode thirdNode = new Node("3");
 
-            IGraph directedGraph = new Graph();
-            directedGraph.AddNode(firstNode);
-            directedGraph.AddNode(secondNode);
-            directedGraph.AddNode(thirdNode);
+            IGraph graph = new Graph();
+            graph.AddNode(firstNode);
+            graph.AddNode(secondNode);
+            graph.AddNode(thirdNode);
 
-            directedGraph.BuildEdge(secondNode, thirdNode, 5);
-            directedGraph.BuildEdge(firstNode, secondNode, 2);
-            directedGraph.BuildEdge(firstNode, thirdNode, 1);
+            graph.BuildEdge(secondNode, thirdNode, 5);
+            graph.BuildEdge(firstNode, secondNode, 2);
+            graph.BuildEdge(firstNode, thirdNode, 1);
 
-            IEdge[] sortedEdges = directedGraph.GetEdgesSorted().ToArray();
+            IEdge[] sortedEdges = graph.GetSortedEdges().ToArray();
 
             Assert.Equal(1, sortedEdges[0].Weight);
             Assert.Equal(2, sortedEdges[1].Weight);
             Assert.Equal(5, sortedEdges[2].Weight);
+        }
+
+        [Fact]
+        public void TestHasNode()
+        {
+            INode firstNode = new Node("1");
+            INode secondNode = new Node("2");
+            INode thirdNode = new Node("3");
+
+            IGraph graph = new Graph();
+            graph.AddNode(firstNode);
+            graph.AddNode(secondNode);
+
+            Assert.True(graph.HasNode(firstNode));
+            Assert.True(graph.HasNode(secondNode));
+            Assert.False(graph.HasNode(thirdNode));
+        }
+
+        [Fact]
+        public void TestResetGraphElements()
+        {
+            INode firstNode = new Node("1");
+            INode secondNode = new Node("2");
+            INode thirdNode = new Node("3");
+
+            IGraph graph = new Graph();
+            graph.AddNode(firstNode);
+            graph.AddNode(secondNode);
+            graph.AddNode(thirdNode);
+
+            graph.BuildEdge(secondNode, thirdNode, 5);
+            graph.BuildEdge(firstNode, secondNode, 2);
+            graph.BuildEdge(firstNode, thirdNode, 1);
+
+            foreach(INode node in graph.GetNodes())
+            {
+                node.IsVisited = true;
+            }
+
+            foreach(IEdge edge in graph.GetSortedEdges())
+            {
+                edge.IsVisited = true;
+            }
+
+            graph.ResetGraphElements();
+
+            foreach(INode node in graph.GetNodes())
+            {
+                Assert.False(node.IsVisited);
+            }
+
+            foreach(IEdge edge in graph.GetSortedEdges())
+            {
+                Assert.False(edge.IsVisited);
+            }
+            
+            
         }
     }
 }
