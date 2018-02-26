@@ -7,7 +7,7 @@ namespace Graphs.Classes
 {
     public class Graph : IGraph
     {
-        protected IList<INode> Nodes { get; set; }
+        protected IDictionary<string, INode> Nodes { get; set; }
         protected IDictionary<INode, IList<IEdge>> Edges { get; set; }
 
         public bool IsDirected { get; private set; }
@@ -15,7 +15,7 @@ namespace Graphs.Classes
         public Graph(bool isDirected = false)
         {
             IsDirected = isDirected;
-            Nodes = new List<INode>();
+            Nodes = new Dictionary<string, INode>();
             Edges = new Dictionary<INode, IList<IEdge>>();
         }
 
@@ -35,15 +35,36 @@ namespace Graphs.Classes
             }           
         }
 
+        public void BuildEdge(string firstNodeId, string secondNodeId, double weight)
+        {
+            CheckEdgeNodes(firstNodeId, secondNodeId);
+            
+            INode firstNode = Nodes[firstNodeId];
+            INode secondNode = Nodes[secondNodeId];
+
+            BuildEdge(firstNode, secondNode, weight);
+        }
+
         public IEnumerable<IEdge> GetEdgesForNode(INode node)
         {
-            if(!Edges.ContainsKey(node))
+            if(Edges.ContainsKey(node))
             {
-                return null;
+                return Edges[node];    
             }
 
-            return Edges[node];
+            return null;
         }
+
+        public IEnumerable<IEdge> GetEdgesForNode(string nodeID)
+        {
+            if(Nodes.ContainsKey(nodeID))
+            {
+                return GetEdgesForNode(Nodes[nodeID]);
+            }
+
+            return null;
+        }
+
         public bool HasEdge(INode firstNode, INode secondNode)
         {
             if(IsDirected)
@@ -58,12 +79,17 @@ namespace Graphs.Classes
 
         public bool HasNode(INode node)
         {
-            return Nodes.Contains(node);
+            return HasNode(node.ID);
+        }
+
+        public bool HasNode(string nodeID)
+        {
+            return Nodes.ContainsKey(nodeID);
         }
 
         public void ResetGraphElements()
         {
-            foreach(IGraphElement graphElement in Nodes)
+            foreach(IGraphElement graphElement in Nodes.Values)
             {
                 graphElement.ResetGraphElement();
             }
@@ -78,22 +104,22 @@ namespace Graphs.Classes
         }
         public INode GetNodeByID(string id)
         {
-            return Nodes.FirstOrDefault(node => node.ID == id);
+            return Nodes.ContainsKey(id) ? Nodes[id]: null;
         }
 
         public void AddNode(INode node)
         {
-            if(Nodes.Any(n => n.ID == node.ID))
+            if(Nodes.ContainsKey(node.ID))
             {
                 throw new ArgumentException(string.Format("There is already a node with ID {0}", node.ID));
             }
 
-            Nodes.Add(node);
+            Nodes.Add(node.ID, node);
         }
 
         public IEnumerable<INode> GetNodes()
         {
-            return Nodes;
+            return Nodes.Values;
         }
 
         public IEnumerable<IEdge> GetSortedEdges()
@@ -147,6 +173,19 @@ namespace Graphs.Classes
             {
                 throw new ArgumentException(string.Format("The node {0} is not part of the graph", secondNode.ID));
             }
-        }        
+        }    
+
+        private void CheckEdgeNodes(string firstNodeId, string secondNodeId)
+        {
+            if(!HasNode(firstNodeId))
+            {
+                throw new ArgumentException(string.Format("The node {0} is not part of the graph", firstNodeId));
+            }
+
+            if(!HasNode(secondNodeId))
+            {
+                throw new ArgumentException(string.Format("The node {0} is not part of the graph", secondNodeId));
+            }
+        }
     }
 }

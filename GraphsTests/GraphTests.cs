@@ -88,6 +88,23 @@ namespace GraphsTests
         }
 
         [Fact]
+        public void TestBuildEdgeById()
+        {
+            IGraph graph = new Graph();
+            graph.AddNode(new Node("1"));
+            graph.AddNode(new Node("2"));
+
+            graph.BuildEdge("1", "2", 1);
+
+            Assert.Single(graph.GetEdgesForNode("1"));
+            Assert.Single(graph.GetEdgesForNode("2"));
+            Assert.Null(graph.GetEdgesForNode("3"));
+            
+            Assert.Throws<ArgumentException>(() => graph.BuildEdge("1", "3", 1));
+        }
+
+
+        [Fact]
         public void TestBuildInvalidEdge()
         {
             INode firstNode = new Node("1");

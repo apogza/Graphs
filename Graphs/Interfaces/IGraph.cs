@@ -8,10 +8,13 @@ namespace Graphs.Interfaces
         IEnumerable<INode> GetNodes();       
         IEnumerable<IEdge> GetSortedEdges();
         IEnumerable<IEdge> GetEdgesForNode(INode node);
+        IEnumerable<IEdge> GetEdgesForNode(string nodeID);
 
         void AddNode(INode node);
 
         void BuildEdge(INode firstNode, INode secondNode, double weight);
+
+        void BuildEdge(string firstNodeId, string secondNodeId, double weight);
 
         bool HasEdge(INode firstNode, INode secondNode);
 
