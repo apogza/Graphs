@@ -5,7 +5,7 @@ using Graphs.Interfaces;
 
 namespace Graphs.Algorithms
 {
-    public class DepthFirstTraversal : BaseTraversal
+    public class DepthFirstTraversal : BaseTraversal<TraversalResult>
     {
         public DepthFirstTraversal(IGraph graph, INode startNode)
             : base(graph, startNode)

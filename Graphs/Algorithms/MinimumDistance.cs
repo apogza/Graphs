@@ -4,7 +4,7 @@ using Graphs.Interfaces;
 
 namespace Graphs.Algorithms
 {
-    public class MinimumDistance : BaseTraversal
+    public class MinimumDistance : BaseTraversal<WeightedTraversalResult>
     {
         public MinimumDistance(IGraph graph)
             : base(graph)

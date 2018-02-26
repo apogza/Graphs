@@ -5,7 +5,7 @@ using Graphs.Interfaces;
 
 namespace Graphs.Algorithms
 {
-    public class BreadthFirstTraversal : BaseTraversal
+    public class BreadthFirstTraversal : BaseTraversal<TraversalResult>
     {
         public BreadthFirstTraversal(IGraph graph, INode startNode)
             :base(graph, startNode)

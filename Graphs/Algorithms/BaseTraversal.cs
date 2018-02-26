@@ -3,7 +3,7 @@ using Graphs.Interfaces;
 
 namespace Graphs.Algorithms
 {
-    public abstract class BaseTraversal
+    public abstract class BaseTraversal<R> where R : TraversalResult, new()
     {
         protected IGraph Graph { get; set; }
 
@@ -20,11 +20,11 @@ namespace Graphs.Algorithms
             StartNode = startNode;
         }
 
-        protected TraversalResult Result { get; set;}
+        protected R Result { get; set;}
 
-        public TraversalResult Run()
+        public R Run()
         {
-            Result = new TraversalResult();
+            Result = new R();
 
             Graph.ResetGraphElements();
             Traverse();

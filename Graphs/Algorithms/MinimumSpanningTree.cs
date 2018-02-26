@@ -5,28 +5,58 @@ using Graphs.Interfaces;
 
 namespace Graphs.Algorithms
 {
-    public sealed class MinimumSpanningTree : BaseTraversal
+    public sealed class MinimumSpanningTree : BaseTraversal<WeightedTraversalResult>
     {
         private Queue<IEdge> _edgesQueue;
         private Dictionary<string, List<INode>> _clouds;
+
+        private HashSet<INode> _nodes;
         public MinimumSpanningTree(IGraph graph)
             : base(graph)
         {
+        }
+
+        private void InitMST()
+        {
             _edgesQueue = new Queue<IEdge>(Graph.GetSortedEdges());
+
+            _nodes = new HashSet<INode>();
 
             InitNodeClouds();
         }
 
-        protected override void Traverse()
+        private void InitNodeClouds()
         {
-            while(_edgesQueue.Count > 0)
+            _clouds = new Dictionary<string, List<INode>>();
+
+            foreach(INode node in Graph.GetNodes())
             {
-                IEdge edge = _edgesQueue.Dequeue();
-                if(CheckEdgeConnectsTwoClouds(edge))
-                {
-                    Result.Edges.Add(edge);
-                    MergeClouds(edge);
-                }
+                List<INode> nodeList = new List<INode>();
+                nodeList.Add(node);
+
+                _clouds.Add(node.ID, nodeList);
+            }
+        }
+
+        private void AddNewNodes(IEdge edge)
+        {
+            AddNewNode(edge.FirstNode);
+            AddNewNode(edge.SecondNode);
+        }
+
+        private void AddNewNode(INode node)
+        {
+            if(!_nodes.Contains(node))
+            {
+                _nodes.Add(node);
+            }
+        }
+
+        private void AddNodesToResult()
+        {
+            foreach(INode node in _nodes)
+            {
+                Result.Nodes.Add(node);
             }
         }
 
@@ -49,17 +79,24 @@ namespace Graphs.Algorithms
             _clouds[edge.SecondNode.ID] = firstCloud;
         }
 
-        private void InitNodeClouds()
+        protected override void Traverse()
         {
-            _clouds = new Dictionary<string, List<INode>>();
-
-            foreach(INode node in Graph.GetNodes())
+            InitMST();
+            
+            while(_edgesQueue.Count > 0)
             {
-                List<INode> nodeList = new List<INode>();
-                nodeList.Add(node);
-
-                _clouds.Add(node.ID, nodeList);
+                IEdge edge = _edgesQueue.Dequeue();
+                if(CheckEdgeConnectsTwoClouds(edge))
+                {
+                    Result.Edges.Add(edge);
+                    Result.TotalWeight += edge.Weight;
+                    
+                    MergeClouds(edge);
+                    AddNewNodes(edge);
+                }
             }
+
+            AddNodesToResult();
         }
     }
 }
