@@ -37,7 +37,7 @@ namespace GraphsTests
             WeightedTraversalResult result = mst.Run();
 
             Assert.Equal("1,4,5,3,2", string.Join(",", result.Nodes.Select(node => node.ID)));
-            Assert.Equal(21, result.TotalWeight);
+            Assert.Equal(17, result.TotalWeight);
         }
     }
 }
