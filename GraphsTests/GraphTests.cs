@@ -134,11 +134,11 @@ namespace GraphsTests
             graph.BuildEdge(firstNode, secondNode, 2);
             graph.BuildEdge(firstNode, thirdNode, 1);
 
-            IEdge[] sortedEdges = graph.GetSortedEdges().ToArray();
+            IEdge[] sortedEdges = graph.GetEdges().ToArray();
 
-            Assert.Equal(1, sortedEdges[0].Weight);
+            Assert.Equal(5, sortedEdges[0].Weight);
             Assert.Equal(2, sortedEdges[1].Weight);
-            Assert.Equal(5, sortedEdges[2].Weight);
+            Assert.Equal(1, sortedEdges[2].Weight);
         }
 
         [Fact]
@@ -178,7 +178,7 @@ namespace GraphsTests
                 node.IsVisited = true;
             }
 
-            foreach(IEdge edge in graph.GetSortedEdges())
+            foreach(IEdge edge in graph.GetEdges())
             {
                 edge.IsVisited = true;
             }
@@ -190,7 +190,7 @@ namespace GraphsTests
                 Assert.False(node.IsVisited);
             }
 
-            foreach(IEdge edge in graph.GetSortedEdges())
+            foreach(IEdge edge in graph.GetEdges())
             {
                 Assert.False(edge.IsVisited);
             }

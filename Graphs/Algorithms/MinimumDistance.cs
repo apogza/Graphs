@@ -121,8 +121,6 @@ namespace Graphs.Algorithms
             }
         }
 
-
-
         private void TraceBackMinDistancePath()
         {
             INode currentNode = EndNode;

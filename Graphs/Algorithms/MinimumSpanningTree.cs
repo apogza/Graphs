@@ -19,7 +19,10 @@ namespace Graphs.Algorithms
 
         private void InitMST()
         {
-            _edgesQueue = new Queue<IEdge>(Graph.GetSortedEdges());
+            List<IEdge> edges = new List<IEdge>(Graph.GetEdges());
+            edges.Sort();
+
+            _edgesQueue = new Queue<IEdge>(edges);
 
             _nodes = new HashSet<INode>();
 
