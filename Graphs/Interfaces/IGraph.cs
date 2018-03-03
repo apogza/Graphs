@@ -20,6 +20,10 @@ namespace Graphs.Interfaces
 
         bool HasNode(INode node);
 
+        bool HasNode(string nodeID);
+
+        INode GetNodeByID(string nodeID);
+
         void ResetGraphElements();
     }
 }

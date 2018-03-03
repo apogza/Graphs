@@ -11,6 +11,7 @@ namespace Graphs.Algorithms
         private Dictionary<string, List<INode>> _clouds;
 
         private HashSet<INode> _nodes;
+        
         public MinimumSpanningTree(IGraph graph)
             : base(graph)
         {
