@@ -7,7 +7,7 @@ namespace Graphs.Algorithms
 {
     public class MinimumDistance : BaseTraversal<WeightedTraversalResult>
     {
-        private SortedList<double, List<IEdge>> _cloudEdges;
+        private SortedDictionary<double, List<IEdge>> _cloudEdges;
 
         private Dictionary<INode, NodeEdgePair> _nodePath;
 
@@ -33,7 +33,7 @@ namespace Graphs.Algorithms
 
         private void InitMinimumDistance()
         {
-            _cloudEdges = new SortedList<double, List<IEdge>>();
+            _cloudEdges = new SortedDictionary<double, List<IEdge>>();
             _nodePath = new Dictionary<INode, NodeEdgePair>();
         }
 
