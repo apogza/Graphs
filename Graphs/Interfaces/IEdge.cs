@@ -13,6 +13,6 @@ namespace Graphs.Interfaces
 
         bool CanGetOppositeNode(INode node);
 
-        INode GetOppositeNode(INode node);
+        INode GetOppositeNode(INode node, bool ignoreDirection = false);
     }
 }

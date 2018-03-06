@@ -66,10 +66,7 @@ namespace Graphs.Algorithms
 
         private bool CheckEdgeConnectsTwoClouds(IEdge edge)
         {
-            List<INode> firstCloud = _clouds[edge.FirstNode.ID];
-            List<INode> secondCloud = _clouds[edge.SecondNode.ID];
-            
-            return firstCloud != secondCloud;
+            return _clouds[edge.FirstNode.ID] != _clouds[edge.SecondNode.ID];
         }
 
         private void MergeClouds(IEdge edge)
@@ -79,8 +76,10 @@ namespace Graphs.Algorithms
 
             firstCloud.AddRange(secondCloud);
 
-            _clouds[edge.FirstNode.ID] = firstCloud;
-            _clouds[edge.SecondNode.ID] = firstCloud;
+            foreach(INode node in firstCloud)
+            {
+                _clouds[node.ID] = firstCloud;
+            }
         }
 
         protected override void Traverse()

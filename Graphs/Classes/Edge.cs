@@ -26,8 +26,8 @@ namespace Graphs.Classes
 
         public bool CanGetOppositeNode(INode node)
         {
-            return (node == FirstNode || node == SecondNode)
-                    && ((IsDirected && node == FirstNode) || !IsDirected);
+            return (!IsDirected && (node == FirstNode || node == SecondNode))
+                    || (IsDirected && node == FirstNode);
         }
 
         public int CompareTo(IEdge edge)
@@ -35,7 +35,7 @@ namespace Graphs.Classes
             return Weight.CompareTo(edge.Weight);
         }
 
-        public INode GetOppositeNode(INode node)
+        public INode GetOppositeNode(INode node, bool ignoreDirection = false)
         {
             if(FirstNode == node)
             {
@@ -43,11 +43,11 @@ namespace Graphs.Classes
             }
             else if(SecondNode == node)
             {
-                 if(IsDirected)
-                 {
-                     throw new InvalidOperationException("Cannot go against the direction of the edge");
-                 }
-
+                if(IsDirected && !ignoreDirection)
+                {
+                    throw new InvalidOperationException("Cannot go against the direction of the edge");
+                }
+                
                  return FirstNode;
             }
             else

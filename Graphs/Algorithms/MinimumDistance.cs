@@ -51,8 +51,12 @@ namespace Graphs.Algorithms
                 NodeEdgePair nextNode = GetNextNode();
                 CheckNextNode(nextNode);
                 
-                _nodePath.Add(nextNode.Node, 
-                    new NodeEdgePair{ Node = nextNode.Edge.GetOppositeNode(nextNode.Node), Edge = nextNode.Edge});
+                _nodePath.Add(  nextNode.Node, 
+                                new NodeEdgePair
+                                { 
+                                    Node = nextNode.Edge.GetOppositeNode(nextNode.Node, true), 
+                                    Edge = nextNode.Edge
+                                });
                 
                 RemoveCloudEdge(nextNode.Edge);
                 currentNode = nextNode.Node;
@@ -67,14 +71,17 @@ namespace Graphs.Algorithms
 
             INode nextNode = null;
 
-            foreach(IEdge edge in edges)
+            if(edges != null)
             {
-                if(edge.CanGetOppositeNode(node))
+                foreach(IEdge edge in edges)
                 {
-                    nextNode = edge.GetOppositeNode(node);
-                    if(!nextNode.IsVisited)
+                    if(edge.CanGetOppositeNode(node))
                     {
-                        AddCloudEdge(edge);
+                        nextNode = edge.GetOppositeNode(node);
+                        if(!nextNode.IsVisited)
+                        {
+                            AddCloudEdge(edge);
+                        }
                     }
                 }
             }
