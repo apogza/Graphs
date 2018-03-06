@@ -157,7 +157,8 @@ namespace Graphs.Algorithms
                     if(!edge.IsVisited)
                     {
                         nextEdge = edge;
-                        nextNode = !edge.FirstNode.IsVisited ? edge.FirstNode : edge.SecondNode;
+                        nextNode = !edge.FirstNode.IsVisited ? 
+                                        edge.FirstNode : edge.GetOppositeNode(edge.FirstNode);
                         return new NodeEdgePair { Node = nextNode, Edge = nextEdge};
                     }
                 }
