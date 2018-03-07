@@ -10,7 +10,7 @@ namespace GraphsTests
     public class DepthFirstTraversalTests
     {
         [Fact]
-        public void TestDFS()
+        public void TestDFSDirectedGraph()
         {   
             INode node1 = new Node("1");
             INode node2 = new Node("2");
@@ -36,6 +36,33 @@ namespace GraphsTests
             string result = string.Join(",", traversalResult.Nodes.Select(node => node.ID));
 
             Assert.Equal("1,2,4,5,3", result);
+        }
+
+        [Fact]
+        public void TestDFSUnDirectedGraph()
+        {
+            IGraph graph = new Graph();
+            graph.AddNode(new Node("s"));
+            graph.AddNode(new Node("a"));
+            graph.AddNode(new Node("b"));
+            graph.AddNode(new Node("c"));
+            graph.AddNode(new Node("d"));
+            graph.AddNode(new Node("e"));
+
+
+            graph.BuildEdge("s", "a", 0);
+            graph.BuildEdge("s", "b", 0);
+            graph.BuildEdge("a", "c", 0);
+            graph.BuildEdge("a", "b", 0);
+            graph.BuildEdge("b", "d", 0);
+            graph.BuildEdge("c", "e", 0);
+            graph.BuildEdge("c", "d", 0);
+            graph.BuildEdge("d", "e", 0);
+
+            DepthFirstTraversal dfs = new DepthFirstTraversal(graph, graph.GetNodeByID("s"));
+            TraversalResult tr = dfs.Run();
+
+            Assert.Equal("s,a,c,e,d,b", string.Join(",", tr.Nodes.Select(node => node.ID)));
         }
     }
 }

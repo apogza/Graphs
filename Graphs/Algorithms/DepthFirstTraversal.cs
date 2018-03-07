@@ -29,8 +29,9 @@ namespace Graphs.Algorithms
                 {
                     foreach(IEdge edge in edges)
                     {
-                        if(edge.CanGetOppositeNode(node))
-                        {
+                        if(!edge.IsVisited && edge.CanGetOppositeNode(node))
+                        {   
+                            edge.IsVisited = true;
                             DFS(edge.GetOppositeNode(node));
                         }
                     }
