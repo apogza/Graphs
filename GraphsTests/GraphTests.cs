@@ -98,7 +98,7 @@ namespace GraphsTests
 
             Assert.Single(graph.GetEdgesForNode("1"));
             Assert.Single(graph.GetEdgesForNode("2"));
-            Assert.Null(graph.GetEdgesForNode("3"));
+            Assert.Empty(graph.GetEdgesForNode("3"));
             
             Assert.Throws<ArgumentException>(() => graph.BuildEdge("1", "3", 1));
         }

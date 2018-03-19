@@ -47,7 +47,7 @@ namespace Graphs.Classes
 
         public IEnumerable<IEdge> GetEdgesForNode(INode node)
         {
-            if(Edges.ContainsKey(node))
+            if(HasEdgesForNode(node))
             {
                 return Edges[node];    
             }
@@ -57,12 +57,22 @@ namespace Graphs.Classes
 
         public IEnumerable<IEdge> GetEdgesForNode(string nodeID)
         {
-            if(Nodes.ContainsKey(nodeID))
+            if(HasEdgesForNode(nodeID))
             {
                 return GetEdgesForNode(Nodes[nodeID]);
             }
 
-            return null;
+            return new List<IEdge>();
+        }
+
+        public bool HasEdgesForNode(INode node)
+        {
+            return Edges.ContainsKey(node);
+        }
+
+        public bool HasEdgesForNode(string nodeID)
+        {
+            return Nodes.ContainsKey(nodeID) && HasEdgesForNode(Nodes[nodeID]);
         }
 
         public bool HasEdge(INode firstNode, INode secondNode)

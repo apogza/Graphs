@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Graphs.Classes;
 using Graphs.Interfaces;
+using System.Linq;
 
 namespace Graphs.Algorithms
 {
@@ -14,25 +15,28 @@ namespace Graphs.Algorithms
 
         protected override void Traverse()
         {
-            DFS(StartNode);
-        }
+            Stack<INode> nodeStack = new Stack<INode>();
+            nodeStack.Push(StartNode);
 
-        private void DFS(INode node)
-        {
-            if(node != null && !node.IsVisited)
+            while(nodeStack.Count > 0)
             {
-                node.IsVisited = true;
-                Result.Nodes.Add(node);
+                INode currentNode = nodeStack.Pop();
 
-                IEnumerable<IEdge> edges = Graph.GetEdgesForNode(node);
-                if(edges != null)
+                if(!currentNode.IsVisited)
                 {
-                    foreach(IEdge edge in edges)
+                    currentNode.IsVisited = true;
+                    Result.Nodes.Add(currentNode);
+
+                    if(Graph.HasEdgesForNode(currentNode))
                     {
-                        if(!edge.IsVisited && edge.CanGetOppositeNode(node))
-                        {   
-                            edge.IsVisited = true;
-                            DFS(edge.GetOppositeNode(node));
+                        // do a reverse on the collection of edges to preserve the natural order on the stack
+                        foreach(IEdge edge in Graph.GetEdgesForNode(currentNode).Reverse())
+                        {
+                            if(!edge.IsVisited && edge.CanGetOppositeNode(currentNode))
+                            {   
+                                edge.IsVisited = true;
+                                nodeStack.Push(edge.GetOppositeNode(currentNode));
+                            }
                         }
                     }
                 }
